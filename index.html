@@ -31,24 +31,20 @@
         // Define the starting timestamp
         const startTime = new Date("2023-09-27 00:00:00").getTime();
 
-        let lastUpdate = new Date().getTime();
-        let currentCandy = 50000;  // 50kg = 50000 grams
-
-        // Calculate candy consumed since the last update
-        function calculateConsumedCandy() {
+        function getCurrentCandy() {
             const now = new Date().getTime();
-            const elapsedMilliseconds = now - lastUpdate;
+            const elapsedMilliseconds = now - startTime;
             const elapsedDays = elapsedMilliseconds / (1000 * 60 * 60 * 24);
-            const candyConsumed = elapsedDays * 1000; // 1kg = 1000 grams eaten every day
+            const totalCandyConsumed = elapsedDays * 1000; // 1kg = 1000 grams eaten every day
 
-            lastUpdate = now;
-            return candyConsumed;
+            return 50000 - totalCandyConsumed; // 50kg = 50000 grams
         }
+
+        let currentCandy = getCurrentCandy();
 
         // Update candy amount regularly
         setInterval(() => {
-            const consumed = calculateConsumedCandy();
-            currentCandy -= consumed;
+            currentCandy -= (1 / 86400) * 1000; // 1kg over one day in grams per 100 milliseconds
             if (currentCandy > 0) {
                 candyCounterElement.textContent = currentCandy.toFixed(3); // display 3 decimal places
                 candyBarElement.style.width = `${(currentCandy / 50000) * 100}%`;  // adjust the width of the candy bar
