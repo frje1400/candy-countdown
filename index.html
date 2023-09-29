@@ -41,10 +41,17 @@
         }
 
         let currentCandy = getCurrentCandy();
+        let lastUpdateTime = new Date().getTime();
 
         // Update candy amount regularly
         setInterval(() => {
-            currentCandy -= (1 / 86400) * 1000; // 1kg over one day in grams per 100 milliseconds
+            const now = new Date().getTime();
+            const elapsedMilliseconds = now - lastUpdateTime;
+            const candyConsumed = (elapsedMilliseconds / (1000 * 60 * 60 * 24)) * 1000; // grams eaten during elapsed time
+            currentCandy -= candyConsumed;
+
+            lastUpdateTime = now;
+
             if (currentCandy > 0) {
                 candyCounterElement.textContent = currentCandy.toFixed(3); // display 3 decimal places
                 candyBarElement.style.width = `${(currentCandy / 50000) * 100}%`;  // adjust the width of the candy bar
