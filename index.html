@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Countdown</title>
+</head>
+
+<body>
+    <h1>Candy Countdown!</h1>
+    <p><strong>Total Candy Lost:</strong> 50kg</p>
+    <p><strong>Candy Remaining:</strong> <span id="candyCounter">50000</span> grams</p>
+    <script>
+        const candyCounterElement = document.getElementById('candyCounter');
+
+        // Define the starting timestamp
+        const startTime = new Date("2023-09-27 00:00:00").getTime();
+
+        // Calculate candy consumed up to now
+        function calculateCurrentCandy() {
+            const now = new Date().getTime();
+            const elapsedMilliseconds = now - startTime;
+            const elapsedDays = elapsedMilliseconds / (1000 * 60 * 60 * 24);
+            const totalCandyConsumed = elapsedDays * 1000; // 1kg = 1000 grams eaten every day
+
+            return 50000 - totalCandyConsumed; // 50kg = 50000 grams
+        }
+
+        // Update candy amount every second
+        setInterval(() => {
+            const currentCandy = calculateCurrentCandy();
+            if (currentCandy > 0) {
+                candyCounterElement.textContent = Math.round(currentCandy);
+            } else {
+                candyCounterElement.textContent = "0";
+            }
+        }, 1000); // Update every second
+    </script>
+</body>
+
+</html>
