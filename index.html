@@ -10,6 +10,7 @@
 <body>
     <h1>Candy Countdown!</h1>
     <p><strong>Total Candy Lost:</strong> 50kg</p>
+    <p><strong>Estimated amount consumed per day:</strong> 1kg</p>
     <p><strong>Candy Remaining:</strong> <span id="candyCounter">50000</span> grams</p>
     <script>
         const candyCounterElement = document.getElementById('candyCounter');
@@ -27,7 +28,7 @@
             return 50000 - totalCandyConsumed; // 50kg = 50000 grams
         }
 
-        // Update candy amount every second
+        // Update candy amount regularly
         setInterval(() => {
             const currentCandy = calculateCurrentCandy();
             if (currentCandy > 0) {
@@ -35,7 +36,7 @@
             } else {
                 candyCounterElement.textContent = "0";
             }
-        }, 1000); // Update every second
+        }, 100); // Update every 100 milliseconds (0.1 second)
     </script>
 </body>
 
